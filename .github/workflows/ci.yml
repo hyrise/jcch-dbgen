@@ -47,11 +47,13 @@ jobs:
 
       - name: Build SF 0.01 data
         run: |
-          ./dbgen -f -s 0.01 -k -b ./dists.dss
+          mkdir generated_data && cd generated_data
+          ../dbgen -f -s 0.01 -k -b ../dists.dss
 
       - name: Generate queries
         run: |
+          mkdir generated_queries && cd generated_queries && ln -s ../queries/*.sql .
           # With skew.
-          ./qgen -k -s 0.01 -b ./dists.dss -r 123 -l params
+          ../qgen -k -s 0.01 -b ../dists.dss -r 123 -l params
           # Without skew.
-          ./qgen -s 0.01 -b ./dists.dss -r 1234 -l params
+          ../qgen -s 0.01 -b ../dists.dss -r 1234 -l params
