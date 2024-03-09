@@ -158,16 +158,18 @@ static int bTableSet = 0;
 /*
 * flat file print functions; used with -F(lat) option
 */
-int pr_cust (customer_t * c, int mode);
-int pr_line (order_t * o, int mode);
-int pr_order (order_t * o, int mode);
-int pr_part (part_t * p, int mode);
-int pr_psupp (part_t * p, int mode);
-int pr_supp (supplier_t * s, int mode);
-int pr_order_line (order_t * o, int mode);
-int pr_part_psupp (part_t * p, int mode);
-int pr_nation (code_t * c, int mode);
-int pr_region (code_t * c, int mode);
+// HYRISE: change first parameter to void pointer so the tdef loader member can have a function prototype
+// (C2x compatibility).
+int pr_cust (void * c, int mode);
+int pr_line (void * o, int mode);
+int pr_order (void * o, int mode);
+int pr_part (void * p, int mode);
+int pr_psupp (void * p, int mode);
+int pr_supp (void * s, int mode);
+int pr_order_line (void * o, int mode);
+int pr_part_psupp (void * p, int mode);
+int pr_nation (void * c, int mode);
+int pr_region (void * c, int mode);
 
 /*
 * seed generation functions; used with '-O s' option
@@ -370,7 +372,8 @@ gen_tbl (int tnum, DSS_HUGE start, DSS_HUGE count, long upd_num)
 		row_stop(tnum);
 		if (set_seeds && (i % tdefs[tnum].base) < 2)
 		{
-			printf("\nSeeds for %s at rowcount %ld\n", tdefs[tnum].comment, i);
+			// HYRISE: Change format specifier.
+			printf("\nSeeds for %s at rowcount %lld\n", tdefs[tnum].comment, i);
 			dump_seeds(tnum);
 		}
 	}
@@ -445,7 +448,8 @@ partial (int tbl, int s)
 	
 	if (verbose > 0)
 	{
-		fprintf (stderr, "\tStarting to load stage %d of %d for %s...",
+		// HYRISE: Change format specifier.
+		fprintf (stderr, "\tStarting to load stage %d of %ld for %s...",
 			s, children, tdefs[tbl].comment);
 	}
 	
@@ -622,7 +626,8 @@ process_options (int count, char **vector)
 	}
  	part.s = (partsupp_t*) malloc(SUPP_PER_PART * sizeof(partsupp_t));
 	if (part.s == NULL) { 
-		fprintf(stderr, "ERROR Allocating memory for %lld suppliers.\n", SUPP_PER_PART);
+		// HYRISE: Change format specifier.
+		fprintf(stderr, "ERROR Allocating memory for %d suppliers.\n", SUPP_PER_PART);
 		exit(-1);
 	}
 
@@ -785,8 +790,9 @@ main (int ac, char **av)
 		while (upd_num < updates)
 			{
 			if (verbose > 0)
+				// HYRISE: Change format specifier.
 				fprintf (stderr,
-				"Generating update pair #%d for %s",
+				"Generating update pair #%ld for %s",
 				upd_num + 1, tdefs[ORDER_LINE].comment);
 			insert_orders_segment=0;
 			insert_lineitem_segment=0;

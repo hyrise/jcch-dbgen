@@ -166,7 +166,8 @@ varsub(int qnum, int vnum, int flags)
 #ifdef JCCH_SKEW
 				if (JCCH_skew) {
 					strcpy(param[1], "1");
-					strcpy(param[2], "SHINY MINED GOLD" + UnifInt(0, 10, qnum));
+					// HYRISE: Adapt string indexing.
+					strcpy(param[2], &"SHINY MINED GOLD"[UnifInt(0, 10, qnum)]);
 				} 
 #endif
 				param[4][0] = '\0';
@@ -300,7 +301,8 @@ varsub(int qnum, int vnum, int flags)
 				pick_str(&colors, qnum, param[1]);
 #ifdef JCCH_SKEW
 				if (JCCH_skew) {
-					strcpy(param[1], "shiny mined gold" + UnifInt(0, 10, qnum));
+					// HYRISE: Adapt string indexing.
+					strcpy(param[1], &"shiny mined gold"[UnifInt(0, 10, qnum)]);
 				} 
 #endif
 				param[2][0] = '\0';
