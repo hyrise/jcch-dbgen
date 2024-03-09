@@ -45,12 +45,12 @@ jobs:
         run: |
           make
 
-      - name: Build SF 0.01 data
+      - name: Geerate SF 0.01 Data
         run: |
           mkdir generated_data && cd generated_data
           ../dbgen -f -s 0.01 -k -b ../dists.dss
 
-      - name: Generate queries
+      - name: Generate Queries
         run: |
           mkdir generated_queries && cd generated_queries && ln -s ../queries/*.sql .
           # With skew.
