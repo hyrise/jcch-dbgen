@@ -19,22 +19,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-
-          - name: gcc
+          - name: Ubuntu-GCC
             cc: gcc
             os: ubuntu-latest
 
-          - name: clang
+          - name: Ubuntu-Clang
             cc: clang
             os: ubuntu-latest
 
-          - name: clang-macOS
+          - name: macOS-AppleClang
             cc: clang
-            cxx: clang++
             os: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: System Information
         run: |
@@ -45,7 +43,7 @@ jobs:
         run: |
           make
 
-      - name: Geerate SF 0.01 Data
+      - name: Generate SF 0.01 Data
         run: |
           mkdir generated_data && cd generated_data
           ../dbgen -f -s 0.01 -k -b ../dists.dss
@@ -53,7 +51,7 @@ jobs:
       - name: Generate Queries
         run: |
           mkdir generated_queries && cd generated_queries && ln -s ../queries/*.sql .
-          # With skew.
-          ../qgen -k -s 0.01 -b ../dists.dss -r 123 -l params
-          # Without skew.
-          ../qgen -s 0.01 -b ../dists.dss -r 1234 -l params
+          # With skew and seed 123.
+          ../qgen -k -s 0.01 -b ../dists.dss -r 123 -l params > /dev/null
+          # Without skew and seed 1234.
+          ../qgen -s 0.01 -b ../dists.dss -r 1234 -l params > /dev/null
