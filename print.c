@@ -135,7 +135,8 @@ dbg_print(int format, FILE *target, void *data, int len, int sep)
 			}
 		dollars = cents / 100;
 		cents %= 100;
-		fprintf(target, "%ld.%02ld", dollars, cents);
+        // HYRISE: Change format specifier.
+		fprintf(target, "%d.%02d", dollars, cents);
 		break;
 	case DT_CHR:
 		fprintf(target, "%c", *(char *)data);
@@ -151,9 +152,10 @@ dbg_print(int format, FILE *target, void *data, int len, int sep)
 }
 
 int
-pr_cust(customer_t *c, int mode)
+pr_cust(void *t, int mode)
 {
-static FILE *fp = NULL;
+   static FILE *fp = NULL;
+   customer_t *c = (customer_t *) t;
         
    if (fp == NULL)
         fp = print_prep(CUST, 0);
@@ -179,10 +181,11 @@ static FILE *fp = NULL;
  * print the numbered order 
  */
 int
-pr_order(order_t *o, int mode)
+pr_order(void *t, int mode)
 {
     static FILE *fp_o = NULL;
     static int last_mode = 0;
+    order_t *o = (order_t *) t;
         
     if (fp_o == NULL || mode != last_mode)
         {
@@ -266,9 +269,10 @@ pr_order_line(order_t *o, int mode)
  * print the given part
  */
 int
-pr_part(part_t *part, int mode)
+pr_part(void *t, int mode)
 {
-static FILE *p_fp = NULL;
+   static FILE *p_fp = NULL;
+   part_t *part = (part_t *) t;
 
     if (p_fp == NULL)
         p_fp = print_prep(PART, 0);
@@ -331,9 +335,10 @@ pr_part_psupp(part_t *part, int mode)
 }
 
 int
-pr_supp(supplier_t *supp, int mode)
+pr_supp(void *t, int mode)
 {
-static FILE *fp = NULL;
+   static FILE *fp = NULL;
+   supplier_t *supp = (supplier_t *) t;
         
    if (fp == NULL)
         fp = print_prep(SUPP, mode);
@@ -352,9 +357,10 @@ static FILE *fp = NULL;
 }
 
 int
-pr_nation(code_t *c, int mode)
+pr_nation(void *t, int mode)
 {
-static FILE *fp = NULL;
+   static FILE *fp = NULL;
+   code_t *c = (code_t *) t;
         
    if (fp == NULL)
         fp = print_prep(NATION, mode);
@@ -370,9 +376,10 @@ static FILE *fp = NULL;
 }
 
 int
-pr_region(code_t *c, int mode)
+pr_region(void *t, int mode)
 {
-static FILE *fp = NULL;
+   static FILE *fp = NULL;
+   code_t *c = (code_t *) t;
         
    if (fp == NULL)
         fp = print_prep(REGION, mode);

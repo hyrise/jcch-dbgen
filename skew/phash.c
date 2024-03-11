@@ -41,7 +41,8 @@ void init_phash(phash_t *phash, unsigned long maxval) {
 			return;
 		}
 	}
-	fprintf(stderr, "init_skew_failed: could not find inverse for %lld ring of  %lld\n", maxval, PRIME);
+	// HYRISE: Change format specifier.
+	fprintf(stderr, "init_skew_failed: could not find inverse for %lu ring of  %d\n", maxval, PRIME);
 	exit(-1);
 }
 

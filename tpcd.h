@@ -55,7 +55,8 @@
 #define END_TRAN        "COMMIT;"
 #define SET_OUTPUT      ""
 #define SET_ROWCOUNT    "first %d\n"
-#define SET_DBASE       ""
+// HYRISE: Change format specifier.
+#define SET_DBASE       "%s"
 #endif /* VECTORWISE */
 
 #ifdef DB2
