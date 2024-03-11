@@ -1,5 +1,5 @@
 ![Build Status](https://github.com/hyrise/jcch-dbgen/actions/workflows/ci.yml/badge.svg)
-### Note: This fork is adapted for compilation using recent versions of Clang and GCC, which we ensure with a [GitHub action](https://github.com/hyrise/jcch-dbgen/actions).
+### Note: This fork is adapted for compilation using recent versions of Clang and GCC, which we ensure with a [GitHub action](https://github.com/hyrise/jcch-dbgen/actions?branch=master).
 
 # @(#)README	2.4.0-JCCH
 ========================== JCC-H specific info =========================
