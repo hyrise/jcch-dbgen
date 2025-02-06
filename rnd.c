@@ -155,7 +155,8 @@ dump_seeds(int tbl)
 			// HYRISE: Change format specifier.
 			printf("%d(%lld):\t%lld\n", i, Seed[i].nCalls, Seed[i].value);
 #else
-			printf("%d:\t%ld\n", i, Seed[i].value);
+			// HYRISE: Change format specifier.
+			printf("%d:\t%lld\n", i, Seed[i].value);
 #endif
 	return;
 }
