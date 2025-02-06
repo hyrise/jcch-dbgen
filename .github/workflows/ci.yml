@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -46,12 +46,19 @@ jobs:
       - name: Generate SF 0.01 Data
         run: |
           mkdir generated_data && cd generated_data
+          # With skew.
           ../dbgen -f -s 0.01 -k -b ../dists.dss
+          diff -r ../sample_data_sf-0.01/skewed . > /dev/null
+          # Without skew.
+          ../dbgen -f -s 0.01 -b ../dists.dss
+          diff -r ../sample_data_sf-0.01/unskewed . > /dev/null
 
       - name: Generate Queries
         run: |
           mkdir generated_queries && cd generated_queries && ln -s ../queries/*.sql .
           # With skew and seed 123.
-          ../qgen -k -s 0.01 -b ../dists.dss -r 123 -l params > /dev/null
+          ../qgen -k -s 0.01 -b ../dists.dss -r 123 -l params_skewed > /dev/null
+          diff ../sample_params_sf-0.01/params_skewed_seed-123 params_skewed > /dev/null
           # Without skew and seed 1234.
-          ../qgen -s 0.01 -b ../dists.dss -r 1234 -l params > /dev/null
+          ../qgen -s 0.01 -b ../dists.dss -r 1234 -l params_unskewed > /dev/null
+          diff ../sample_params_sf-0.01/params_unskewed_seed-1234 params_unskewed > /dev/null
