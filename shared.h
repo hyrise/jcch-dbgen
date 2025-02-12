@@ -53,7 +53,7 @@
 #define  L_INST_LEN    25
 #define  L_SMODE_LEN   10
 #define  T_ALPHA_LEN   10
-// Hyrise: The compiler does not know that the date components for decade, month, and day will at most have two digits.
+// HYRISE: The compiler does not know that the date components for decade, month, and day will at most have two digits.
 // Thus, we increase the available characters by 2, so even larger numbers would fit (for gcc-13).
 #define  DATE_LEN      13 + 2  /* long enough to hold either date format */
 #define  NATION_LEN    25
