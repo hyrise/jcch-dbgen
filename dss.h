@@ -490,9 +490,9 @@ int dbg_print(int dt, FILE *tgt, void *data, int len, int eol);
 #define  PR_DATE(tgt, yr, mn, dy)	\
    sprintf(tgt, "%02d-%02d-19%02d", mn, dy, yr)
 #else
-// HYRISE: Change format specifier.
+// HYRISE: Change format specifier, cast components as char (gcc-13).
 #define  PR_DATE(tgt, yr, mn, dy)	\
-sprintf(tgt, "19%02ld-%02ld-%02ld", yr, mn, dy)
+sprintf(tgt, "19%02d-%02d-%02d", (char)(yr), (char)(mn), (char)(dy))
 #endif /* DATE_FORMAT */
 
 /*

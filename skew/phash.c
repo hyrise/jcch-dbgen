@@ -82,7 +82,13 @@ void init_skew() {
 uint16_t bin_nationkey(uint64_t key, uint64_t tbl_size) {
 	long row = key / (0.2 * tbl_size);
 	long bin = row * 5;
-	long offset = key - (0.18 + row * 0.2) * tbl_size;
+	// HYRISE: Cast subtrahend as long. Otherwise, we got inconsistent offsets on macOS/clang/ARM. E.g., for
+	// `key = 79`, `tbl_size = 100`, we got `row = 3`, `(0.18 + row * 0.2) * tbl_size) = 78.0`, but `offset = 0`
+	// (instead of 1). With the cast, data is consistent across our tested systems.
+	// Note that this means we have a few customers/suppliers in the dataset (5 for SF 0.01, 8 for SFs 1 and 10)
+	// that have a different `nationkey` compared to the version without the cast. We chose to trade off these
+	// negligible discrepancies for consistency.
+	long offset = key - (long)((0.18 + row * 0.2) * tbl_size);
 	assert(row < 5);
 	if (offset > 0 && 0.02 * tbl_size > 0) { 
 		offset = (4*offset) / (0.02*tbl_size);

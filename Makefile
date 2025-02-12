@@ -10,8 +10,10 @@ CC      ?= gcc
 DATABASE= VECTORWISE 
 MACHINE = LINUX
 WORKLOAD = TPCH
-# HYRISE: Add -O3, remove -g. Add -Wno-dangling-else.
-CFLAGS	= -O3 -DDBNAME=\"dss\" -D$(MACHINE) -D$(DATABASE) -D$(WORKLOAD) -DRNG_TEST -D_FILE_OFFSET_BITS=64 -DJCCH_SKEW=1 -Wno-dangling-else
+# HYRISE: Add -O3, remove -g. Add -Wno-dangling-else. Remove -DRNG_TEST because it only tracks how often the random
+#         seeds were accessed.
+CFLAGS ?=
+CFLAGS += -O3 -DDBNAME=\"dss\" -D$(MACHINE) -D$(DATABASE) -D$(WORKLOAD) -D_FILE_OFFSET_BITS=64 -DJCCH_SKEW=1 -Wno-dangling-else
 LDFLAGS = -O3
 # The OBJ,EXE and LIB macros will need to be changed for compilation under
 #  Windows NT

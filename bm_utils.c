@@ -155,17 +155,20 @@ yes_no(char *prompt)
 #pragma warning(default:4127)
 #endif 
         printf("%s [Y/N]: ", prompt);
-        fgets(reply, 128, stdin);
-        switch (*reply)
+        // HYRISE: Add if.
+        if (fgets(reply, 128, stdin) != NULL)
             {
-            case 'y':
-            case 'Y':
-                return (1);
-            case 'n':
-            case 'N':
-                return (0);
-            default:
-                printf("Please answer 'yes' or 'no'.\n");
+            switch (*reply)
+                {
+                case 'y':
+                case 'Y':
+                    return (1);
+                case 'n':
+                case 'N':
+                    return (0);
+                default:
+                    printf("Please answer 'yes' or 'no'.\n");
+                }
             }
         }
 }
