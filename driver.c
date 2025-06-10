@@ -53,18 +53,18 @@
 */
 /* main driver for dss banchmark */
 
-#define DECLARER				/* EXTERN references get defined here */
-#define NO_FUNC (int (*) ()) NULL	/* to clean up tdefs */
-#define NO_LFUNC (long (*) ()) NULL		/* to clean up tdefs */
+#define DECLARER                                            /* EXTERN references get defined here */
+#define NO_FUNC (int (*) ()) NULL                           /* to clean up tdefs */
+#define NO_LFUNC ((long int (*)(int, long long int)) NULL)  /* to clean up tdefs */
 
 #include "config.h"
 #include "release.h"
 #include <stdlib.h>
-#if (defined(_POSIX_)||!defined(WIN32))		/* Change for Windows NT */
+#if (defined(_POSIX_)||!defined(WIN32))		            /* Change for Windows NT */
 #include <unistd.h>
 #include <sys/wait.h>
 #endif /* WIN32 */
-#include <stdio.h>				/* */
+#include <stdio.h>				            /* */
 #include <limits.h>
 #include <math.h>
 #include <ctype.h>
